@@ -10,9 +10,22 @@
 		287470D12FF4E1FD00C69D9A /* CloudFreeCalender.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CloudFreeCalender.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
+/* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
+		287470D42FF4E1FD00C69D9A /* CloudFreeCalender */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				App/ContentView.swift,
+			);
+			target = 287470D02FF4E1FD00C69D9A /* CloudFreeCalender */;
+		};
+/* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
+
 /* Begin PBXFileSystemSynchronizedRootGroup section */
 		287470D32FF4E1FD00C69D9A /* CloudFreeCalender */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				287470D42FF4E1FD00C69D9A /* CloudFreeCalender */,
+			);
 			path = CloudFreeCalender;
 			sourceTree = "<group>";
 		};
