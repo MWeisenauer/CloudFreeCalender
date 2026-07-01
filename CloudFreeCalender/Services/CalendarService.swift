@@ -175,8 +175,9 @@ actor CalendarService {
             try await send("NLST\r\n", to: controlTask)
             reply = try await readResponse(from: controlTask)
         }
-        if reply.hasPrefix("226") || reply.hasPrefix("250") { dataTask.cancel(); return [] }
-        guard reply.hasPrefix("125") || reply.hasPrefix("150") else { dataTask.cancel(); throw CalendarFTPSError.listingFailed }
+        // 226/250 = transfer complete (empty dir), anything other than 125/150 = treat as empty
+        // (Fritz!Box sometimes returns 450/451 for an empty directory instead of 226)
+        if !reply.hasPrefix("125") && !reply.hasPrefix("150") { dataTask.cancel(); return [] }
 
         let data = try await readAll(from: dataTask)
         _ = try? await readResponse(from: controlTask)
