@@ -6,6 +6,7 @@ nonisolated struct CalendarEvent: Identifiable, Equatable, Sendable {
     var startDate: Date = Date()
     var endDate: Date = Date().addingTimeInterval(3600)
     var isAllDay: Bool = false
+    var farbe: CalendarEventColor = .blau
     var notes: String = ""
     var modifiedDate: Date = Date()
     var remoteFilename: String = ""
@@ -32,7 +33,8 @@ nonisolated struct CalendarEvent: Identifiable, Equatable, Sendable {
             "START:\(iso.string(from: event.startDate))",
             "END:\(iso.string(from: event.endDate))",
             "MODIFIED:\(iso.string(from: event.modifiedDate))",
-            "ALLDAY:\(event.isAllDay ? 1 : 0)"
+            "ALLDAY:\(event.isAllDay ? 1 : 0)",
+            "COLOR:\(event.farbe.rawValue)"
         ].joined(separator: "\n")
         return "\(header)\n---\n\(event.notes)"
     }
@@ -56,6 +58,7 @@ nonisolated struct CalendarEvent: Identifiable, Equatable, Sendable {
             else if line.hasPrefix("END:")      { event.endDate      = iso.date(from: String(line.dropFirst(4))) ?? Date() }
             else if line.hasPrefix("MODIFIED:") { event.modifiedDate = iso.date(from: String(line.dropFirst(9))) ?? Date() }
             else if line.hasPrefix("ALLDAY:")   { event.isAllDay     = line.dropFirst(7) == "1" }
+            else if line.hasPrefix("COLOR:")    { event.farbe        = CalendarEventColor(rawValue: String(line.dropFirst(6))) ?? .blau }
         }
         guard !event.title.isEmpty else { return nil }
         return event

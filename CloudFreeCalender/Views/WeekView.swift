@@ -102,7 +102,7 @@ struct WeekView: View {
                                 .lineLimit(2)
                                 .padding(4)
                                 .frame(maxWidth: .infinity, alignment: .leading)
-                                .background(Color.accentColor.opacity(0.7))
+                                .background(event.farbe.gradient)
                                 .foregroundStyle(.white)
                                 .clipShape(RoundedRectangle(cornerRadius: 4))
                         }

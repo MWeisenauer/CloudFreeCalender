@@ -11,6 +11,7 @@ struct EventEditorView: View {
     @State private var startDate = Date()
     @State private var endDate = Date().addingTimeInterval(3600)
     @State private var isAllDay = false
+    @State private var farbe: CalendarEventColor = .blau
     @State private var notes = ""
     @State private var isLoading = false
     @State private var errorMessage: String?
@@ -23,6 +24,21 @@ struct EventEditorView: View {
                 Section("Termin") {
                     TextField("Titel", text: $title)
                     Toggle("Ganztägig", isOn: $isAllDay.animation())
+                    HStack {
+                        Text("Farbe")
+                        Spacer()
+                        HStack(spacing: 10) {
+                            ForEach(CalendarEventColor.allCases, id: \.rawValue) { c in
+                                Circle()
+                                    .fill(c.gradient)
+                                    .frame(width: 26, height: 26)
+                                    .overlay(Circle().stroke(.white.opacity(farbe == c ? 1 : 0), lineWidth: 2.5))
+                                    .scaleEffect(farbe == c ? 1.15 : 1)
+                                    .animation(.spring(duration: 0.2), value: farbe)
+                                    .onTapGesture { farbe = c }
+                            }
+                        }
+                    }
                 }
 
                 Section("Zeit") {
@@ -82,6 +98,7 @@ struct EventEditorView: View {
         startDate = e.startDate
         endDate = e.endDate
         isAllDay = e.isAllDay
+        farbe = e.farbe
         notes = e.notes
     }
 
@@ -93,6 +110,7 @@ struct EventEditorView: View {
         event.startDate = startDate
         event.endDate = isAllDay ? Calendar.current.startOfDay(for: startDate).addingTimeInterval(86399) : max(endDate, startDate + 60)
         event.isAllDay = isAllDay
+        event.farbe = farbe
         event.notes = notes
 
         Task {

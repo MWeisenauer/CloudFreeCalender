@@ -128,7 +128,7 @@ struct DayView: View {
         .padding(4)
         .frame(maxWidth: .infinity, alignment: .leading)
         .frame(height: height)
-        .background(Color.accentColor.opacity(0.7))
+        .background(event.farbe.gradient)
         .foregroundStyle(.white)
         .clipShape(RoundedRectangle(cornerRadius: 6))
         .padding(.leading, 44)
